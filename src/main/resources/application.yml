@@ -9,6 +9,30 @@ logging:
   file:
     name: C:/${spring.application.name}/log/${spring.application.name}.log
 
+management:
+  info:
+    git:
+      enabled: true
+      mode: full
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+      base-path: /actuator
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+      slo:
+        http.server.requests: 50ms, 100ms, 200ms, 400ms
+    tags:
+      application: ${spring.application.name}
+
 app:
   uri:
     edinetcode: https://disclosure.edinet-fsa.go.jp/E01EW/BLMainController.jsp?uji.bean=ee.bean.W1E62071.EEW1E62071Bean&uji.verb=W1E62071InitDisplay&TID=W1E62071&PID=W0EZ0001&SESSIONKEY=&lgKbn=2&dflg=0&iflg=0
