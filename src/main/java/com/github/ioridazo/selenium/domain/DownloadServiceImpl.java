@@ -1,7 +1,7 @@
 package com.github.ioridazo.selenium.domain;
 
 import com.github.ioridazo.selenium.config.AppConfig;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
-@Slf4j
+@Log4j2
 @Service
 public class DownloadServiceImpl implements SeleniumService {
 
