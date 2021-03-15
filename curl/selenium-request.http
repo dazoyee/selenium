@@ -1,5 +1,5 @@
 ###
-GET http://localhost:9001/selenium/v1/edinetcode
+GET http://localhost:9002/selenium/v1/edinetcode
 
 ### edinetcode?path=C:/fundanalyzer/company
-GET http://localhost:9001/selenium/v1/edinetcode?path=C:\fundanalyzer\company
+GET http://localhost:9002/selenium/v1/edinetcode?path=C:\fundanalyzer\company
