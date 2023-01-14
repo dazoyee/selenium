@@ -12,7 +12,7 @@
 
     <groupId>com.github.ioridazo</groupId>
     <artifactId>selenium</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1-SNAPSHOT</version>
     <name>selenium</name>
 
     <properties>
