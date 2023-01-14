@@ -11,7 +11,7 @@ import java.util.HashMap;
 public class AppConfig {
 
     public WebDriver webDriver() {
-        System.setProperty("webdriver.chrome.driver", "chromedriver/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "bin/chromedriver/chromedriver.exe");
         return new ChromeDriver();
     }
 

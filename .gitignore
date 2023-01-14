@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 logs/
 env
+bin/chromedriver/chromedriver.exe
 
 ### STS ###
 .apt_generated

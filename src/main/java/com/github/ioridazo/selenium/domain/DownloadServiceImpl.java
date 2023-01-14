@@ -1,21 +1,21 @@
 package com.github.ioridazo.selenium.domain;
 
 import com.github.ioridazo.selenium.config.AppConfig;
-import lombok.extern.log4j.Log4j2;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
 
-@Log4j2
 @Service
 public class DownloadServiceImpl implements SeleniumService {
 
-    @Value("${app.uri.edinetcode}")
-    public String edinetcodeUri;
+    private static final Logger log = LogManager.getLogger(DownloadServiceImpl.class);
+
+    private static final String TARGET_URL = "https://disclosure2.edinet-fsa.go.jp/weee0010.aspx";
 
     /**
      * EDINETコードリストをダウンロードする
@@ -28,8 +28,8 @@ public class DownloadServiceImpl implements SeleniumService {
 
         return download(
                 webDriver,
-                edinetcodeUri,
-                () -> ((JavascriptExecutor) webDriver).executeScript("EEW1E62071EdinetCodeListDownloadAction('lgKbn=2&dflg=0&iflg=0&dispKbn=1')")
+                TARGET_URL,
+                () -> webDriver.findElement(By.xpath("//*[@id='GridContainerRow_0001']/td[2]/p/span/a")).click()
         );
     }
 
@@ -45,13 +45,13 @@ public class DownloadServiceImpl implements SeleniumService {
 
         return download(
                 customWebDriver,
-                edinetcodeUri,
-                () -> ((JavascriptExecutor) customWebDriver).executeScript("EEW1E62071EdinetCodeListDownloadAction('lgKbn=2&dflg=0&iflg=0&dispKbn=1')")
+                TARGET_URL,
+                () -> customWebDriver.findElement(By.xpath("//*[@id='GridContainerRow_0001']/td[2]/p/span/a")).click()
         );
     }
 
     @SuppressWarnings("SameParameterValue")
-    private <T> String download(final WebDriver webDriver, final String uri, final Supplier<T> download) {
+    private String download(final WebDriver webDriver, final String uri, final Runnable download) {
         //指定したURLに遷移する
         webDriver.get(uri);
 
@@ -59,25 +59,18 @@ public class DownloadServiceImpl implements SeleniumService {
         webDriver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
 
         // ダウンロードする
-        download.get();
+        download.run();
+
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
         // chromeダウンロードに移動する
         webDriver.get("chrome://downloads");
 
         final var javascriptExecutor = (JavascriptExecutor) webDriver;
-
-        // 100%完了するまでダウンロードを待つ
-        try {
-            double percentageProgress = 0;
-            Thread.sleep(1000);
-            while (percentageProgress != 100) {
-                percentageProgress = (Long) javascriptExecutor.executeScript("return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('#progress').value");
-                Thread.sleep(100);
-            }
-        } catch (InterruptedException e) {
-            log.warn("", e);
-            Thread.currentThread().interrupt();
-        }
 
         // ダウンロードソースリンクのURLを取得する
         var downloadSourceLink = (String) javascriptExecutor.executeScript("return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('div#content #file-link').href");

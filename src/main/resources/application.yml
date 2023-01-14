@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: selenium
+    name: @pom.artifactId@
 
   sleuth:
     enabled: true
@@ -17,15 +17,14 @@ spring:
     sender:
       type: web
 
-#logging:
-#  file:
-#    name: C:/${spring.application.name}/log/${spring.application.name}.log
-
 management:
   info:
     git:
       enabled: true
       mode: full
+    env.enabled: true
+    build.enabled: true
+    java.enabled: true
   endpoints:
     web:
       exposure:
@@ -33,8 +32,7 @@ management:
       base-path: /actuator
   endpoint:
     health:
-      probes:
-        enabled: true
+      show-details: always
 
   metrics:
     distribution:
@@ -44,7 +42,3 @@ management:
         http.server.requests: 50ms, 100ms, 200ms, 400ms
     tags:
       application: ${spring.application.name}
-
-app:
-  uri:
-    edinetcode: https://disclosure.edinet-fsa.go.jp/E01EW/BLMainController.jsp?uji.bean=ee.bean.W1E62071.EEW1E62071Bean&uji.verb=W1E62071InitDisplay&TID=W1E62071&PID=W0EZ0001&SESSIONKEY=&lgKbn=2&dflg=0&iflg=0
