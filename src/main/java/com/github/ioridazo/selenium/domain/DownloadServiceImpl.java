@@ -8,7 +8,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 
 @Service
 public class DownloadServiceImpl implements SeleniumService {
@@ -56,7 +56,7 @@ public class DownloadServiceImpl implements SeleniumService {
         webDriver.get(uri);
 
         // 最大5秒間、ページが完全に読み込まれるまで待つ
-        webDriver.manage().timeouts().pageLoadTimeout(5, TimeUnit.SECONDS);
+        webDriver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
 
         // ダウンロードする
         download.run();
@@ -72,13 +72,10 @@ public class DownloadServiceImpl implements SeleniumService {
 
         final var javascriptExecutor = (JavascriptExecutor) webDriver;
 
-        // ダウンロードソースリンクのURLを取得する
-        var downloadSourceLink = (String) javascriptExecutor.executeScript("return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('div#content #file-link').href");
-
-        log.info("正常にダウンロードしました。\tURL:{}", downloadSourceLink);
-
         // Java Queryを使用してファイル名を取得する
         var fileName = (String) javascriptExecutor.executeScript("return document.querySelector('downloads-manager').shadowRoot.querySelector('#downloadsList downloads-item').shadowRoot.querySelector('div#content #file-link').text");
+
+        log.info("正常にダウンロードしました。\tファイル名：{}", fileName);
 
         webDriver.close();
 
