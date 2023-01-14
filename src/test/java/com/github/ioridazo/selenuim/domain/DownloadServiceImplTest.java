@@ -16,7 +16,6 @@ class DownloadServiceImplTest {
     @BeforeEach
     void setUp() {
         service = new DownloadServiceImpl();
-        service.edinetcodeUri = "https://disclosure.edinet-fsa.go.jp/E01EW/BLMainController.jsp?uji.bean=ee.bean.W1E62071.EEW1E62071Bean&uji.verb=W1E62071InitDisplay&TID=W1E62071&PID=W0EZ0001&SESSIONKEY=&lgKbn=2&dflg=0&iflg=0";
     }
 
     @Nested
