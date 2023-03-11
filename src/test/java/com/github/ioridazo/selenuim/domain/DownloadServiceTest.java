@@ -1,7 +1,7 @@
 package com.github.ioridazo.selenuim.domain;
 
 import com.github.ioridazo.selenium.config.AppConfig;
-import com.github.ioridazo.selenium.domain.DownloadServiceImpl;
+import com.github.ioridazo.selenium.domain.DownloadService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -10,13 +10,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class DownloadServiceImplTest {
+class DownloadServiceTest {
 
-    private DownloadServiceImpl service;
+    private DownloadService service;
 
     @BeforeEach
     void setUp() {
-        service = new DownloadServiceImpl(new AppConfig());
+        service = new DownloadService(new AppConfig());
     }
 
     @Nested

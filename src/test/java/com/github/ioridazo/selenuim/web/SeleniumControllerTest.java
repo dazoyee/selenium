@@ -1,6 +1,6 @@
 package com.github.ioridazo.selenuim.web;
 
-import com.github.ioridazo.selenium.domain.SeleniumService;
+import com.github.ioridazo.selenium.domain.DownloadService;
 import com.github.ioridazo.selenium.web.SeleniumController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ class SeleniumControllerTest {
     private WebApplicationContext context;
 
     @MockBean
-    private SeleniumService service;
+    private DownloadService service;
 
     @BeforeEach
     void setUp() {
@@ -45,7 +45,7 @@ class SeleniumControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("file name"))
-                ;
+        ;
     }
 
     @Test

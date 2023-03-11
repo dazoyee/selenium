@@ -10,15 +10,15 @@ import org.openqa.selenium.WebDriver;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DownloadServiceImpl implements SeleniumService {
+public class DownloadService {
 
-    private static final Logger log = LogManager.getLogger(DownloadServiceImpl.class);
+    private static final Logger log = LogManager.getLogger(DownloadService.class);
 
     private static final String TARGET_URL = "https://disclosure2.edinet-fsa.go.jp/weee0010.aspx";
 
     private final AppConfig config;
 
-    public DownloadServiceImpl(final AppConfig config) {
+    public DownloadService(final AppConfig config) {
         this.config = config;
     }
 
