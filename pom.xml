@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.7</version>
+        <version>3.0.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -17,10 +17,11 @@
 
     <properties>
         <java.version>17</java.version>
-        <selenium-java.version>4.7.2</selenium-java.version>
+        <selenium-java.version>4.8.1</selenium-java.version>
+        <webdrivermanager.version>5.3.0</webdrivermanager.version>
         <ecs-logging-java.version>1.5.0</ecs-logging-java.version>
         <git-commit-id-plugin.version>4.9.10</git-commit-id-plugin.version>
-        <spring-cloud.version>2021.0.4</spring-cloud.version>
+        <spring-cloud.version>2021.0.6</spring-cloud.version>
 
         <maven-assembly-plugin.version>3.4.2</maven-assembly-plugin.version>
         <maven-pmd-plugin.version>3.19.0</maven-pmd-plugin.version>
@@ -56,6 +57,16 @@
             <artifactId>selenium-java</artifactId>
             <version>${selenium-java.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.4.16</version>
+        </dependency>
 
         <!-- elastic-->
         <dependency>
@@ -79,13 +90,6 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
             <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <!--suppress VulnerableLibrariesLocal -->
-            <groupId>pl.project13.maven</groupId>
-            <artifactId>git-commit-id-plugin</artifactId>
-            <version>${git-commit-id-plugin.version}</version>
         </dependency>
 
         <dependency>
@@ -144,6 +148,23 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>${git-commit-id-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <verbose>true</verbose>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                </configuration>
             </plugin>
 
             <!-- パッケージ生成 -->

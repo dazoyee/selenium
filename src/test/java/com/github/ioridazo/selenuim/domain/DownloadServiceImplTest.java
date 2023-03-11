@@ -1,5 +1,6 @@
 package com.github.ioridazo.selenuim.domain;
 
+import com.github.ioridazo.selenium.config.AppConfig;
 import com.github.ioridazo.selenium.domain.DownloadServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -15,7 +16,7 @@ class DownloadServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        service = new DownloadServiceImpl();
+        service = new DownloadServiceImpl(new AppConfig());
     }
 
     @Nested
