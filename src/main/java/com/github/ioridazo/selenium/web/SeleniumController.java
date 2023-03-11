@@ -1,6 +1,6 @@
 package com.github.ioridazo.selenium.web;
 
-import com.github.ioridazo.selenium.domain.SeleniumService;
+import com.github.ioridazo.selenium.domain.DownloadService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SeleniumController {
 
-    private final SeleniumService service;
+    private final DownloadService service;
 
-    public SeleniumController(final SeleniumService service) {
+    public SeleniumController(final DownloadService service) {
         this.service = service;
     }
 
