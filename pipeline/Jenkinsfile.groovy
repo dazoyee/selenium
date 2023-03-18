@@ -81,7 +81,7 @@ pipeline {
                             credentialsId: 'nexus3',
                             protocol: 'http',
                             nexusUrl: 'localhost:8081',
-                            repository: 'maven-snapshots',
+                            repository: 'maven-releases',
                             groupId: pom.groupId,
                             version: pom.version,
                             artifacts: [
@@ -103,7 +103,7 @@ pipeline {
                     env.URL = 'http://localhost:8081' +
                             '/service/rest/v1/search/assets/download' +
                             '?sort=version' +
-                            '&repository=maven-snapshots' +
+                            '&repository=maven-releases' +
                             '&maven.groupId=' + pom.groupId +
                             '&maven.artifactId=' + pom.artifactId +
                             '&maven.baseVersion=' + pom.version
