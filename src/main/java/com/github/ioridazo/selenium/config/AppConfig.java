@@ -26,6 +26,9 @@ public class AppConfig {
     @Bean
     public ChromeOptions chromeOptions() {
         ChromeOptions options = new ChromeOptions();
+//        options.addArguments("--headless");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--remote-allow-origins=*");
         options.setScriptTimeout(Duration.ofSeconds(15));
         options.setPageLoadTimeout(Duration.ofSeconds(15));
         return options;
