@@ -81,7 +81,7 @@ pipeline {
                             credentialsId: 'nexus3',
                             protocol: 'http',
                             nexusUrl: 'localhost:8081',
-                            repository: 'maven-snapshots',
+                            repository: 'maven-releases',
                             groupId: pom.groupId,
                             version: pom.version,
                             artifacts: [
