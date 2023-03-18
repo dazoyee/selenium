@@ -103,7 +103,7 @@ pipeline {
                     env.URL = 'http://localhost:8081' +
                             '/service/rest/v1/search/assets/download' +
                             '?sort=version' +
-                            '&repository=maven-snapshots' +
+                            '&repository=maven-releases' +
                             '&maven.groupId=' + pom.groupId +
                             '&maven.artifactId=' + pom.artifactId +
                             '&maven.baseVersion=' + pom.version
