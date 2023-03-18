@@ -12,12 +12,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@EnableWebMvc
 @SpringBootTest(classes = SeleniumController.class)
 class SeleniumControllerTest {
 
@@ -44,7 +46,16 @@ class SeleniumControllerTest {
                 )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("file name"))
+                .andExpect(MockMvcResultMatchers.content().json(
+                        """
+                                {
+                                    "status": "ok",
+                                    "content": {
+                                        "filename": "file name"
+                                    }
+                                 }
+                                 """
+                ))
         ;
     }
 
@@ -59,7 +70,16 @@ class SeleniumControllerTest {
                 )
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string("file name"))
+                .andExpect(MockMvcResultMatchers.content().json(
+                        """
+                                {
+                                    "status": "ok",
+                                    "content": {
+                                        "filename": "file name"
+                                    }
+                                 }
+                                 """
+                ))
         ;
     }
 }

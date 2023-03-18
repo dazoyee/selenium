@@ -1,11 +1,14 @@
 package com.github.ioridazo.selenium.domain;
 
 import com.github.ioridazo.selenium.config.AppConfig;
+import com.github.ioridazo.selenium.exception.MaintenanceException;
+import com.github.ioridazo.selenium.exception.SeleniumRuntimeException;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.springframework.stereotype.Service;
 
@@ -30,13 +33,7 @@ public class DownloadService {
     public String downloadEdinetCode() {
         log.info("EDINETコードリストのダウンロード処理を開始します。\t保存先:{}", "デフォルト");
         WebDriverManager.chromedriver().setup();
-        final WebDriver webDriver = config.webDriver();
-
-        return download(
-                webDriver,
-                TARGET_URL,
-                () -> webDriver.findElement(By.xpath("//*[@id='GridContainerRow_0001']/td[2]/p/span/a")).click()
-        );
+        return download(config.webDriver());
     }
 
     /**
@@ -48,22 +45,25 @@ public class DownloadService {
     public String downloadEdinetCode(final String downloadFolder) {
         log.info("EDINETコードリストのダウンロード処理を開始します。\t保存先:{}", downloadFolder);
         WebDriverManager.chromedriver().setup();
-        final WebDriver customWebDriver = config.customWebDriver(downloadFolder);
-
-        return download(
-                customWebDriver,
-                TARGET_URL,
-                () -> customWebDriver.findElement(By.xpath("//*[@id='GridContainerRow_0001']/td[2]/p/span/a")).click()
-        );
+        return download(config.customWebDriver(downloadFolder));
     }
 
     @SuppressWarnings("SameParameterValue")
-    private String download(final WebDriver webDriver, final String uri, final Runnable download) {
+    private String download(final WebDriver webDriver) {
         //指定したURLに遷移する
-        webDriver.get(uri);
+        webDriver.get(TARGET_URL);
 
         // ダウンロードする
-        download.run();
+        try {
+            webDriver.findElement(By.xpath("//*[@id='GridContainerRow_0001']/td[2]/p/span/a")).click();
+        } catch (final NoSuchElementException e) {
+            final String bodyText = webDriver.findElement(By.xpath("//*[@id='TABLECONTENT_MPAGE']")).getText();
+            if (bodyText.contains("システムメンテナンス")) {
+                throw new MaintenanceException(e, bodyText);
+            } else {
+                throw new SeleniumRuntimeException(e, bodyText);
+            }
+        }
 
         try {
             Thread.sleep(10000);
